@@ -4,6 +4,7 @@ const express = require("express");
 const nunjucks = require("nunjucks");
 const bodyParser = require("body-parser");
 const routes = require("./routes");
+const ExpressError = require("./errors/expressError");
 
 const app = express();
 
@@ -14,6 +15,11 @@ nunjucks.configure("templates", {
   autoescape: true,
   express: app
 });
+
+// Use middleware logging function and prevent printing favicon.ico error to terminal
+app.use(morgan('dev'));
+app.get('/favicon.ico', (req, res) => res.sendStatus(204));
+
 
 app.use(routes);
 
