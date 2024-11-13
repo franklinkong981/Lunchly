@@ -24,9 +24,20 @@ router.post("/search", async function(req, res, next) {
   try {
     const search_term = req.body.search;
     const results = await Customer.search(search_term);
-    
+
     return res.render("customer_search_results.html", {results, search_term});
   } catch (err) {
+    return next(err);
+  }
+});
+
+/** Show the top 10 customers that have the most reservations (up to 10). */
+router.get("/top_customers", async function(req, res, next) {
+  try {
+    const top_customers = await Customer.get_top_customers();
+
+    return res.render("top_customers.html", {top_customers});
+  } catch(err) {
     return next(err);
   }
 });

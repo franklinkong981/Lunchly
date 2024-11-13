@@ -56,11 +56,22 @@ class Customer {
   /**Search for customers in database that match a search result */
   static async search(search_term) {
     const search_results = await db.query(
-      `SELECT id, first_name AS "firstName", last_name AS "lastName" FROM customers WHERE first_name LIKE $1 OR last_name LIKE $1`,
+      `SELECT id, first_name AS "firstName", last_name AS "lastName", phone, notes FROM customers WHERE first_name LIKE $1 OR last_name LIKE $1`,
       [search_term]
     );
 
     return search_results.rows.map(c => new Customer(c));
+  }
+
+  /** Return the top 10 customers with the most reservations, sorted by most to least number of reservations. ONLY INCLUDES customers with more than 0 reseravtions. */
+  static async get_top_customers() {
+    const top_customers = await db.query(
+      `SELECT c.id, c.last_name AS "lastName", c.first_name AS "firstName", c.phone, c.notes, COUNT(r.id) 
+      FROM reservations AS r JOIN customers AS c ON r.customer_id = c.id
+      GROUP BY c.id ORDER BY COUNT(r.id) DESC, c.last_name, c.first_name LIMIT 10`
+    );
+
+    return top_customers.rows.map(c => new Customer(c));
   }
 
   /** Return the full name of the customer. */

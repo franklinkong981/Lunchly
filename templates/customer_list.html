@@ -6,6 +6,8 @@
 
 <h1>Customers</h1>
 
+<a class="btn btn-info" href="/top_customers">Top Customers</a>
+
 <ul style="column-count: 4">
   {% for customer in customers %}
   <li><a href="/{{ customer.id }}/">{{customer.getFullName()}}</a></li>
