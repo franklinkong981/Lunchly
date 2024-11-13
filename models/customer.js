@@ -14,6 +14,19 @@ class Customer {
     this.notes = notes;
   }
 
+  set notes(val) {
+    this._notes = val || "";
+  }
+
+  get notes() {
+    return this._notes;
+  }
+
+  /** Return the full name of the customer. */
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`
+  } 
+
   /** find all customers. */
 
   static async all() {
@@ -73,11 +86,6 @@ class Customer {
 
     return top_customers.rows.map(c => new Customer(c));
   }
-
-  /** Return the full name of the customer. */
-  getFullName() {
-    return `${this.firstName} ${this.lastName}`
-  } 
 
   /** get all reservations for this customer. */
 

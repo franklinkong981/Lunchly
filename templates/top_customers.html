@@ -6,7 +6,7 @@
 
 <ul>
   {% for customer in top_customers %}
-  <li><a href="/{{ customer.id }}/">{{customer.getFullName()}}</a></li>
+  <li><a href="/{{ customer.id }}/">{{customer.fullName()}}</a></li>
   {% endfor %}
 </ul>
 
