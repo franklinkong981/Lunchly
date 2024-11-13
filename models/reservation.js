@@ -22,6 +22,26 @@ class Reservation {
     return moment(this.startAt).format('MMMM Do YYYY, h:mm a');
   }
 
+  /** get a reservation by ID. */
+
+  static async get(id) {
+    const results = await db.query(
+      `SELECT id, customer_id AS "customerId", start_at AS "startAt", num_guests AS "numGuests", notes 
+        FROM reservations WHERE id = $1`,
+      [id]
+    );
+
+    const reservation = results.rows[0];
+
+    if (reservation === undefined) {
+      const err = new Error(`No such reservation: ${id}`);
+      err.status = 404;
+      throw err;
+    }
+
+    return new Reservation(reservation);
+  }
+
   /** given a customer id, find their reservations. */
 
   static async getReservationsForCustomer(customerId) {

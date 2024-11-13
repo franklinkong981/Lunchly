@@ -140,4 +140,21 @@ router.post("/:id/add-reservation/", async function(req, res, next) {
   }
 });
 
+/** Handle editing a reservation. The id here is the id of the RESERVATION.*/
+
+router.post("/:id/edit-reservation", async function(req, res, next) {
+  try {
+    const reservation = await Reservation.get(req.params.id);
+    reservation.startAt = new Date(req.body.startAt);
+    reservation.numGuests = Number(req.body.numGuests);
+    reservation.notes = req.body.notes;
+    await Reservation.save();
+
+    return res.redirect(`/${reservation.customerId}/`);
+
+  } catch (err) {
+    return next(err);
+  }
+});
+
 module.exports = router;
