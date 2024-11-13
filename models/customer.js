@@ -60,7 +60,7 @@ class Customer {
       [search_term]
     );
 
-    return search_results.rows;
+    return search_results.rows.map(c => new Customer(c));
   }
 
   /** Return the full name of the customer. */

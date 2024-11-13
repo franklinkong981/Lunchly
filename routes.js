@@ -20,11 +20,12 @@ router.get("/", async function(req, res, next) {
 
 /** Search results page when user submits form to search for customers on the navbar. */
 
-router.get("/search", async function(req, res, next) {
+router.post("/search", async function(req, res, next) {
   try {
-    const results = await Customer.search(req.body.search);
-
-    return res.render("customer_search_results.html", {results});
+    const search_term = req.body.search;
+    const results = await Customer.search(search_term);
+    
+    return res.render("customer_search_results.html", {results, search_term});
   } catch (err) {
     return next(err);
   }
