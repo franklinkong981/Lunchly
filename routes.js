@@ -57,11 +57,12 @@ router.get("/add/", async function(req, res, next) {
 router.post("/add/", async function(req, res, next) {
   try {
     const firstName = req.body.firstName;
+    const middleName = req.body.middleName;
     const lastName = req.body.lastName;
     const phone = req.body.phone;
     const notes = req.body.notes;
 
-    const customer = new Customer({ firstName, lastName, phone, notes });
+    const customer = new Customer({ firstName, middleName, lastName, phone, notes });
     await customer.save();
 
     return res.redirect(`/${customer.id}/`);
@@ -102,6 +103,7 @@ router.post("/:id/edit/", async function(req, res, next) {
   try {
     const customer = await Customer.get(req.params.id);
     customer.firstName = req.body.firstName;
+    customer.middleName = req.body.middleName;
     customer.lastName = req.body.lastName;
     customer.phone = req.body.phone;
     customer.notes = req.body.notes;
