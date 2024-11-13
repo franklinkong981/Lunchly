@@ -39,6 +39,47 @@ class Reservation {
     return results.rows.map(row => new Reservation(row));
   }
 
+  set numGuests(num) {
+    if (num < 1) {
+      const err = new Error(`There must be at least one person in the reservation.`);
+      err.status = 400;
+      throw err;
+    }
+    this._numGuests = num;
+  }
+
+  get numGuests() {
+    return this._numGuests;
+  }
+
+  set startAt(startDate) {
+    if (startDate instanceof Date) {
+      this._startAt = startDate;
+    } else {
+      const err = new Error(`The startAt attribute must be a valid Date object.`);
+      err.status = 400;
+      throw err;
+    }
+  }
+
+  get startAt() {
+    return this._startAt;
+  }
+
+  set customerId(id) {
+    if (this._customerId == undefined) {
+      this._customerId = id;
+    } else {
+      const err = new Error(`You can't change a reservation's customer id once it exists.`);
+      err.status = 400;
+      throw err;
+    }
+  }
+
+  get customerId() {
+    return this._customer_id;
+  }
+
   /** save this reservation by adding it to the database if it's new or updating its information in the database. */
   async save() {
     if (this.id == undefined) {
