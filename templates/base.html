@@ -32,6 +32,18 @@
         <li class="nav-item">
           <a class="nav-link" href="/add/">Add a Customer</a>
         </li>
+        <li class="nav-item">
+          <form action="/search" class="form-inline" method="POST">
+            <div class="form-group">
+              <label for="customer-search" class="mr-2">Search Customers</label>
+              <input id="customer-search"
+                     class="form-control mr-2"
+                     name="search"
+                     placeholder="ex. Franklin"
+            >
+            <button class="btn btn-primary">Search</button>
+          </form>
+        </li>
       </ul>
     </div>
   </nav>
