@@ -53,6 +53,16 @@ class Customer {
     return new Customer(customer);
   }
 
+  /**Search for customers in database that match a search result */
+  static async search(search_term) {
+    const search_results = await db.query(
+      `SELECT id, first_name AS "firstName", last_name AS "lastName" FROM customers WHERE first_name LIKE $1 OR last_name LIKE $1`,
+      [search_term]
+    );
+
+    return search_results.rows;
+  }
+
   /** Return the full name of the customer. */
   getFullName() {
     return `${this.firstName} ${this.lastName}`
