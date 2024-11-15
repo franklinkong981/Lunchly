@@ -97,7 +97,7 @@ class Reservation {
   }
 
   get customerId() {
-    return this._customer_id;
+    return this._customerId;
   }
 
   /** save this reservation by adding it to the database if it's new or updating its information in the database. */

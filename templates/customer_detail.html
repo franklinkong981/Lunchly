@@ -21,6 +21,7 @@
       {% for reservation in reservations %}
       <li>
         <b>{{ reservation.getformattedStartAt() }}</b> for {{ reservation.numGuests }}
+        <a class="btn btn-warning" href="/{{reservation.id}}/edit-reservation">Edit</a>
         {% if reservation.notes %}
           <p>{{reservation.notes}}</p>
         {% endif %}
